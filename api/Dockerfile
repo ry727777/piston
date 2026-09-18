@@ -13,6 +13,8 @@ FROM node:15.10.0-buster-slim
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN dpkg-reconfigure -p critical dash
+RUN sed -i 's|deb.debian.org|archive.debian.org|g; s|security.debian.org|archive.debian.org/debian-security|g' /etc/apt/sources.list && \
+    echo 'Acquire::Check-Valid-Until "false";' > /etc/apt/apt.conf.d/99no-check-valid-until
 RUN apt-get update && \
     apt-get install -y libxml2 gnupg tar coreutils util-linux libc6-dev \
     binutils build-essential locales libpcre3-dev libevent-dev libgmp3-dev \
